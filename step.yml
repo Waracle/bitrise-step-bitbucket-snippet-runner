@@ -95,4 +95,13 @@ inputs:
       summary: "The password (or *app* password if 2FA is enabled) for the user to authenticate against."
       is_required: false
 
-  - is_debug: false  
+  - is_debug: "no"
+    opts:
+      category: Debug
+      description: |
+        If debug=yes the step will print debug infos about
+        the working dir, tmp file path, exit code, etc.
+      title: Debug print?
+      value_options:
+      - "no"
+      - "yes" 
