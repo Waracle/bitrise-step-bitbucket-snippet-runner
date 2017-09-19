@@ -95,6 +95,16 @@ inputs:
       summary: "The password (or *app* password if 2FA is enabled) for the user to authenticate against."
       is_required: false
 
+  - working_dir: "$BITRISE_SOURCE_DIR"
+    opts:
+      category: Config
+      title: "Working directory"
+      description: |
+        This directory will be set as the current working
+        directory for the script.
+        Any relative path in the Script (content) will be
+        relative to this directory.   
+
   - is_debug: "no"
     opts:
       category: Debug

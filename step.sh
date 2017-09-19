@@ -17,6 +17,18 @@ if [[ "${script_url}" == "" ]]; then
 	exit 1
 fi
 
+echo
+echo "working_dir: ${working_dir}"
+
+if [ ! -z "${working_dir}" ] ; then
+	echo "==> Switching to working directory: ${working_dir}"
+	cd "${working_dir}"
+	if [ $? -ne 0 ] ; then
+		echo " [!] Failed to switch to working directory: ${working_dir}"
+		exit 1
+	fi
+fi
+
 
 echo
 echo "---------------------------------------------------"
