@@ -67,8 +67,8 @@ if [ ! -z "${username}" ]; then
 	DOWNLOAD_URL="$(echo ${DOWNLOAD_URL} | sed "s|://|://$username:$password@|g")"
 fi
 
-# download the snippet file, and run the script
-curl -sSl $DOWNLOAD_URL | bash
+# download the snippet file, and run the script, with any arguments
+curl -sSl $DOWNLOAD_URL | bash -s -- ${script_args}
 
 res_code=$?
 if [ ${res_code} -ne 0 ] ; then
