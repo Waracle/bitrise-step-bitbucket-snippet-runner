@@ -70,6 +70,7 @@ toolkit:
 inputs:
   - script_url:
     opts:
+      category: Config
       title: "Snippet URL"
       summary: |
         The Bitbucket url of the snippet to run
@@ -85,12 +86,14 @@ inputs:
   
   - username: $BITBUCKET_USERNAME
     opts:
+      category: Config
       title: "Username"
       summary: "The Bitbucket username to access the snippet with."
       is_required: false
 
   - password: $BITBUCKET_PASSWORD
     opts:
+      category: Config
       title: "Password"
       summary: "The password (or *app* password if 2FA is enabled) for the user to authenticate against."
       is_required: false
@@ -103,7 +106,17 @@ inputs:
         This directory will be set as the current working
         directory for the script.
         Any relative path in the Script (content) will be
-        relative to this directory.   
+        relative to this directory. 
+      is_required: false 
+
+  - script_args:
+    opts:
+      category: Config
+      title: "Script Arguments"
+      description: |
+        Allows passing of arguments to be passed
+        into the downloaded script
+      is_required: false     
 
   - is_debug: "no"
     opts:
