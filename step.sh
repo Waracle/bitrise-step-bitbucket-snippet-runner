@@ -68,9 +68,14 @@ if [ ! -z "${username}" ]; then
 fi
 
 # download the snippet file, and run the script, with any arguments
-TMPFILE=$(mktemp) || exit 1
+TMPFILE=$(mktemp) || {
+    echo "--- [!] Unable to create a temporary file to download snippet to"
+	echo "---------------------------------------------------"
+	exit 1
+}
+
 curl -sSl $DOWNLOAD_URL -o "${TMPFILE}"
-. $TMPFILE -s -- ${script_args}
+. $TMPFILE "${script_args}"
 
 res_code=$?
 if [ ${res_code} -ne 0 ] ; then
