@@ -41,26 +41,26 @@ echo
 REGEX='^(([^:/?#]+):)?(//([^/?#]*))?([^?#]*)(\?([^#]*))?(#(.*))?'
 
 if [[ $script_url =~ $REGEX ]]; then
- PROTOCOL="${BASH_REMATCH[2]}" 
- DOMAIN="${BASH_REMATCH[4]}" 
- SNIPPET="${BASH_REMATCH[5]}" 
+ PROTOCOL="${BASH_REMATCH[2]}"
+ DOMAIN="${BASH_REMATCH[4]}"
+ SNIPPET="${BASH_REMATCH[5]}"
 fi
 
 if [[ "$DOMAIN" == 'bitbucket.org' ]]; then
 	HOST='api.bitbucket.org'
 else
-	HOST="${DOMAIN}/api"	 
+	HOST="${DOMAIN}/api"
 fi
 
 # inject username and password into the snippet url if required
 if [[ ! -z "${username}" ]]; then
-	HOST="${username}:${password}@${HOST}" 
+	HOST="${username}:${password}@${HOST}"
 fi
 
 URL="${PROTOCOL}://${HOST}/2.0${SNIPPET}"
 
 # get the snippet metadata and extract the correct url to download the file with
-DOWNLOAD_URL="$(curl -sSL $URL | jq -r .files[].links.self.href)" 
+DOWNLOAD_URL="$(curl -sSL $URL | jq -r .files[].links.self.href)"
 
 # inject username and password into the download url if required
 if [ ! -z "${username}" ]; then
@@ -68,7 +68,14 @@ if [ ! -z "${username}" ]; then
 fi
 
 # download the snippet file, and run the script, with any arguments
-curl -sSl $DOWNLOAD_URL | bash -s -- ${script_args}
+TMPFILE=$(mktemp) || {
+    echo "--- [!] Unable to create a temporary file to download snippet to"
+	echo "---------------------------------------------------"
+	exit 1
+}
+
+curl -sSl $DOWNLOAD_URL -o "${TMPFILE}"
+. $TMPFILE "${script_args}"
 
 res_code=$?
 if [ ${res_code} -ne 0 ] ; then

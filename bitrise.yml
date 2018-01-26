@@ -3,7 +3,7 @@ default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
 
 app:
   envs:
-  - BITBUCKET_USERNAME: 
+  - BITBUCKET_USERNAME:
   # An example secret param, define it (BITBUCKET_PASSWORD) in .bitrise.secrets.yml
   - BITBUCKET_PASSWORD: $BITBUCKET_PASSWORD
   # If you want to share this step into a StepLib
@@ -29,13 +29,14 @@ workflows:
     - path::./:
         title: Step Test
         description: |-
-          Downloads and runs the remote bash script located on a bitbucket 
+          Downloads and runs the remote bash script located on a bitbucket
           server/cloud instance
         run_if: true
         inputs:
         - script_url: https://bitbucket.org/snippets/waracle/xLMA9q
         - username:
-        - password: 
+        - password:
+        - script_args: -t this is a test
         - is_debug: 'no'
 
   # ----------------------------------------------------------------
