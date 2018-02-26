@@ -76,11 +76,9 @@ TMPFILE=$(mktemp) || {
 
 curl -sSl $DOWNLOAD_URL -o "${TMPFILE}"
 
-SCRIPT_ARGS_STRING=()
 declare -a "array=($script_args)"
-#declare -a "array=('-t' '/path/to/somewhere' '-a' '/path/to/another/somewhere with space')"
 
-. ${TMPFILE} $(printf "\"%s\" " "${array[@]}")
+. ${TMPFILE} $(printf "'%s' " "${array[@]}" | xargs )
 
 res_code=$?
 if [ ${res_code} -ne 0 ] ; then
